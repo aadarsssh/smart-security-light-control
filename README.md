@@ -47,18 +47,19 @@ graph TD
     B --> C[Read LDR Analog Value]
     C --> D[Read PIR Digital State]
     
-    D --> E{Is Ambient Light < Threshold?\n(Is it Dark?)}
+    D --> E{Is it Dark?}
     
-    E -- No (Daylight) --> F[Turn LED OFF]
-    E -- Yes (Dark) --> G{Is Motion Detected?\n(PIR == HIGH)}
+    E -- No --> F[Turn LED OFF]
+    E -- Yes --> G{Is Motion Detected?}
     
     G -- No --> F
     G -- Yes --> H[Turn LED ON]
     H --> I[Trigger sendCloudAlert Function]
     I --> J[Establish Connection to Cloud API]
     J --> K[Publish HTTP/MQTT Security Payload]
-    K --> L[Enforce Cooldown Delay\n(5 Seconds)]
+    K --> L[Enforce Cooldown Delay]
     
     F --> M[Wait 500ms Loop Delay]
     L --> M
+    M --> C
     M --> C
